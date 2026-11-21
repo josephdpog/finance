@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>경제 현황 자기 진단</title>
+  <!-- Google Fonts: Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans KR"', 'sans-serif'],
+          },
+          colors: {
+            ivory: '#F9F8F4',
+            navy: {
+              DEFAULT: '#1E2D3D',
+              light: '#3E4E5E',
+              muted: '#6B7B8C',
+            },
+            sage: {
+              50: '#F2F5F2',
+              100: '#E2EBE2',
+              200: '#C5D7C6',
+              500: '#5F7A61',
+              600: '#4E6650',
+              700: '#3D523F',
+            },
+            warm: {
+              50: '#FDF7F2',
+              100: '#F8E9DC',
+              500: '#C47D55',
+            }
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-ivory text-navy font-sans antialiased min-h-screen flex flex-col items-center justify-between selection:bg-sage-100 selection:text-sage-700">
+
+  <!-- 메인 컨테이너 -->
+  <main class="w-full max-w-lg mx-auto px-4 py-6 sm:py-10 flex-grow flex flex-col justify-center">
+
+    <!-- ==================== 1. 시작 화면 ==================== -->
+    <section id="screen-start" class="bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-9 transition-all duration-300">
+
+      <div class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-sage-50 text-sage-700 text-sm font-semibold mb-5 border border-sage-200/60">
+        <svg class="w-4 h-4 text-sage-500" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        100% 익명 · 약 2~3분 소요
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl font-bold text-navy leading-snug tracking-tight mb-3 break-keep">
+        경제 현황 자기 진단
+      </h1>
+      <p class="text-base sm:text-lg text-navy-light leading-relaxed mb-7 break-keep">
+        자산 관리 현황과 투자 스타일을 점검해보세요.
+      </p>
+
+      <!-- 구성 안내 -->
+      <div class="bg-ivory rounded-2xl p-5 mb-6 space-y-4 border border-stone-200/70">
+        <div>
+          <p class="font-semibold text-navy text-base">경제·자산 현황 점검 (5문항)</p>
+          <p class="text-sm text-navy-muted mt-0.5">간단한 O / X 선택으로 나의 경제·자산 관리 현황 확인</p>
+        </div>
+        <div class="h-px bg-stone-200/70"></div>
+        <div>
+          <p class="font-semibold text-navy text-base">투자 선택 경향 점검 (5문항)</p>
+          <p class="text-sm text-navy-muted mt-0.5">상황별 A / B / C 선택으로 나의 투자 선택 경향 파악</p>
+        </div>
+      </div>
+
+      <!-- 익명 안내 -->
+      <div class="flex items-start gap-3 bg-sage-50/90 border border-sage-200/70 rounded-2xl p-4 mb-8">
+        <svg class="w-5 h-5 text-sage-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+        </svg>
+        <p class="text-sm sm:text-base text-sage-700 leading-relaxed font-medium break-keep">
+          입력한 답변은 별도로 저장하거나 전송하지 않으며, 진단 결과는 현재 화면에서 확인할 수 있습니다.
+        </p>
+      </div>
+
+      <button
+        id="btn-start"
+        type="button"
+        class="w-full py-4 px-6 rounded-2xl bg-sage-500 hover:bg-sage-600 active:scale-[0.99] text-white text-lg font-bold shadow-md shadow-sage-500/20 transition-all duration-200 cursor-pointer"
+      >
+        진단 시작하기
+      </button>
+    </section>
+
+    <!-- ==================== 2. 문항 화면 ==================== -->
+    <section id="screen-quiz" class="hidden bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-8 transition-all duration-300">
+
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-3 gap-2">
+          <span id="quiz-part-badge" class="inline-block px-3.5 py-1 rounded-full bg-sage-50 text-sage-700 text-sm font-semibold">
+            파트 1 · 경제·자산 현황
+          </span>
+          <span id="quiz-progress-text" class="text-base font-bold text-sage-600 flex-shrink-0">
+            1 / 10
+          </span>
+        </div>
+        <div class="w-full h-2.5 bg-stone-100 rounded-full overflow-hidden">
+          <div id="quiz-progress-bar" class="h-full bg-sage-500 rounded-full transition-all duration-300 ease-out" style="width: 10%"></div>
+        </div>
+      </div>
+
+      <div class="min-h-[120px] flex flex-col justify-center mb-7">
+        <p id="quiz-question-num" class="text-sm font-bold text-sage-600 mb-2">Q1.</p>
+        <h2 id="quiz-question-text" class="text-xl sm:text-2xl font-bold text-navy leading-relaxed break-keep">
+          질문 내용이 여기에 표시됩니다.
+        </h2>
+      </div>
+
+      <div id="quiz-options" class="space-y-3.5 mb-8">
+      </div>
+
+      <div class="flex items-center justify-between pt-3 border-t border-stone-100">
+        <button
+          id="btn-prev"
+          type="button"
+          class="inline-flex items-center gap-1.5 py-3 px-4 rounded-xl text-navy-muted hover:text-navy hover:bg-stone-100 font-medium text-base transition-colors cursor-pointer"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          이전 문항
+        </button>
+        <span class="text-xs sm:text-sm text-navy-muted">답변을 누르면 다음으로 넘어갑니다</span>
+      </div>
+    </section>
+
+    <!-- ==================== 3. 결과 화면 ==================== -->
+    <section id="screen-result" class="hidden space-y-5 transition-all duration-300">
+
+      <div class="bg-sage-600 text-white rounded-3xl p-6 sm:p-8 shadow-sm">
+        <h2 class="text-2xl sm:text-3xl font-bold leading-snug mb-2 break-keep">
+          진단 결과
+        </h2>
+        <p class="text-sage-100 text-base leading-relaxed break-keep">
+          진단에는 정답이 없습니다. 지금 나의 출발선과 여행 스타일을 가볍게 확인하고, 앞으로의 방향을 잡는 참고 자료로 활용해 보세요.
+        </p>
+      </div>
+
+      <!-- PART 1 -->
+      <div class="bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-7">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-sm font-bold text-sage-600 tracking-wide">PART 1. 경제·자산 현황</span>
+          <span id="res-p1-score-badge" class="px-3 py-1 rounded-full bg-sage-50 text-sage-700 font-bold text-sm">
+            5개 중 0개 O
+          </span>
+        </div>
+
+        <h3 id="res-p1-title" class="text-xl sm:text-2xl font-bold text-navy mb-2.5 leading-snug break-keep">
+          지도 없이도 척척, 베테랑 가이드
+        </h3>
+        <p id="res-p1-desc" class="text-base text-navy-light leading-relaxed mb-5 break-keep">
+          설명 문구가 표시됩니다.
+        </p>
+
+        <div class="mb-6">
+          <div class="flex justify-between text-xs font-medium text-navy-muted mb-1.5">
+            <span>0개</span>
+            <span>점검 항목 충족 개수</span>
+            <span>5개</span>
+          </div>
+          <div class="w-full h-3.5 bg-stone-100 rounded-full overflow-hidden">
+            <div id="res-p1-gauge" class="h-full bg-sage-500 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div class="bg-ivory rounded-2xl p-5 border border-stone-200/70">
+          <p class="text-base font-bold text-navy mb-3 flex items-center gap-2">
+            <svg class="w-5 h-5 text-sage-600 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+            </svg>
+            앞으로 O로 바꿀 포인트
+          </p>
+          <ul id="res-p1-checkpoints-list" class="space-y-2.5 text-sm sm:text-base text-navy-light leading-relaxed break-keep">
+          </ul>
+        </div>
+      </div>
+
+      <!-- PART 2 -->
+      <div class="bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-7">
+        <div class="flex items-center justify-between mb-3 gap-2">
+          <span class="text-sm font-bold text-sage-600 tracking-wide">PART 2. 나의 투자 선택 경향</span>
+          <span id="res-p2-score-badge" class="px-3 py-1 rounded-full bg-warm-100 text-warm-500 font-bold text-sm flex-shrink-0">
+            10점 / 15점
+          </span>
+        </div>
+
+        <div class="mb-2">
+          <span id="res-p2-tier-badge" class="inline-block px-3 py-1 rounded-lg bg-navy/5 text-navy font-semibold text-sm">
+            3단계 · 균형추구형
+          </span>
+        </div>
+
+        <h3 id="res-p2-title" class="text-xl sm:text-2xl font-bold text-navy mb-2.5 leading-snug break-keep">
+          안전과 설렘 사이, 실속파 자유여행러
+        </h3>
+        <p id="res-p2-desc" class="text-base text-navy-light leading-relaxed mb-5 break-keep">
+          투자 선택 경향 설명이 표시됩니다.
+        </p>
+
+        <div class="bg-sage-50 rounded-2xl p-5 border border-sage-200/70 mb-6">
+          <p class="text-sm sm:text-base font-bold text-sage-700 mb-2 flex items-center gap-1.5">
+            <svg class="w-5 h-5 text-sage-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"></path>
+            </svg>
+            앞으로 생각해 볼 포인트
+          </p>
+          <p id="res-p2-tip" class="text-base text-navy font-medium leading-relaxed break-keep">
+            성향별 맞춤형 포인트 문구가 표시됩니다.
+          </p>
+        </div>
+
+        <!-- 선택 비율 -->
+        <div class="space-y-3.5">
+          <p class="text-sm font-bold text-navy-muted">나의 선택 비율 (총 5문항)</p>
+
+          <div>
+            <div class="flex justify-between text-sm font-medium mb-1">
+              <span class="text-navy">A. 원금 보존·안정 지향</span>
+              <span id="bar-a-label" class="font-bold text-sage-700">0% (0개)</span>
+            </div>
+            <div class="w-full h-3 bg-stone-100 rounded-full overflow-hidden">
+              <div id="bar-a-fill" class="h-full bg-sage-500 rounded-full transition-all duration-700" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm font-medium mb-1">
+              <span class="text-navy">B. 분산·균형 지향</span>
+              <span id="bar-b-label" class="font-bold text-slate-700">0% (0개)</span>
+            </div>
+            <div class="w-full h-3 bg-stone-100 rounded-full overflow-hidden">
+              <div id="bar-b-fill" class="h-full bg-slate-500 rounded-full transition-all duration-700" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm font-medium mb-1">
+              <span class="text-navy">C. 수익·적극 투자 지향</span>
+              <span id="bar-c-label" class="font-bold text-warm-500">0% (0개)</span>
+            </div>
+            <div class="w-full h-3 bg-stone-100 rounded-full overflow-hidden">
+              <div id="bar-c-fill" class="h-full bg-warm-500 rounded-full transition-all duration-700" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 하단 버튼 -->
+      <div class="space-y-3 pt-2">
+        <button
+          id="btn-copy"
+          type="button"
+          class="w-full py-4 px-6 rounded-2xl bg-sage-500 hover:bg-sage-600 active:scale-[0.99] text-white text-lg font-bold shadow-md shadow-sage-500/20 flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+          </svg>
+          내 결과 요약 복사하기
+        </button>
+
+        <button
+          id="btn-restart"
+          type="button"
+          class="w-full py-3.5 px-6 rounded-2xl bg-white hover:bg-stone-50 border border-stone-300 text-navy font-semibold text-base transition-colors cursor-pointer"
+        >
+          다시 진단하기
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="w-full py-5 text-center text-xs sm:text-sm text-navy-muted px-4">
+    본 진단은 익명 셀프 체크 도구이며, 입력한 답변은 별도로 저장하거나 전송하지 않습니다.
+  </footer>
+
+  <!-- 토스트 알림 -->
+  <div
+    id="toast"
+    role="status"
+    aria-live="polite"
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-navy text-white px-5 py-3.5 rounded-2xl shadow-lg text-sm sm:text-base font-medium flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-300 translate-y-3 max-w-[92vw]"
+  >
+    <svg class="w-5 h-5 text-sage-200 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+    </svg>
+    <span id="toast-message" class="break-keep">결과가 복사되었습니다. 메모장이나 카카오톡에 붙여넣어 보관하세요!</span>
+  </div>
+
+  <!-- 애플리케이션 스크립트 -->
+  <script>
+    /**
+     * 문항 데이터 정의
+     * 파트 1: O=1, X=0
+     * 파트 2: A=1, B=2, C=3
+     */
+    const QUESTIONS = [
+      // 파트 1. 경제·자산 현황 점검
+      {
+        id: 1,
+        part: 1,
+        text: "우리 집의 월평균 수입과 지출 규모를 대략적으로 파악하고 있다.",
+        checkpoint: "우리 집의 월평균 수입과 지출 규모를 파악하고, 고정 지출과 변동 지출을 구분해 정리하기"
+      },
+      {
+        id: 2,
+        part: 1,
+        text: "예금·적금, 주식, 연금, 부동산 등 내가 보유한 자산과 대출을 포함한 부채 규모를 대략적으로 파악하고 있다.",
+        checkpoint: "예금·적금, 주식, 연금, 부동산 등 전체 자산과 대출을 포함한 부채 규모를 한눈에 정리하기"
+      },
+      {
+        id: 3,
+        part: 1,
+        text: "갑작스러운 실직이나 질병 등 예상치 못한 상황에 대비해, 언제든 사용할 수 있는 비상금을 별도로 마련해 두었다.",
+        checkpoint: "갑작스러운 실직이나 질병 등에 대비해 언제든 사용할 수 있는 비상금 마련하기"
+      },
+      {
+        id: 4,
+        part: 1,
+        text: "국민연금, 퇴직연금, 개인연금, 금융자산 등 우리 가구의 노후 생활을 위한 준비 상황을 알고 있다.",
+        checkpoint: "국민연금, 퇴직연금, 개인연금, 금융자산 등 우리 가구의 노후 준비 상황을 점검하기"
+      },
+      {
+        id: 5,
+        part: 1,
+        text: "은행 예·적금 이자만으로는 물가 상승률을 따라가기 어렵다는 점을 체감하고 있다.",
+        checkpoint: "은행 예·적금 이자와 물가 상승률(인플레이션)의 차이 이해하기"
+      },
+
+      // 파트 2. 투자 선택 경향 점검
+      {
+        id: 6,
+        part: 2,
+        text: "당장 쓸 일이 없는 여유 자금 1,000만 원이 생겼습니다. 어떻게 하시겠습니까?",
+        options: [
+          {
+            key: "A",
+            score: 1,
+            text: "원금 손실 가능성을 피하기 위해 은행 정기예금에 넣는다."
+          },
+          {
+            key: "B",
+            score: 2,
+            text: "일부는 예금에 두고, 나머지는 위험과 수익 가능성을 비교해 배당주나 채권형 상품 등에 분산한다."
+          },
+          {
+            key: "C",
+            score: 3,
+            text: "가격 변동과 손실 가능성을 감수하더라도 국내외 주식이나 펀드 등에 적극적으로 투자한다."
+          }
+        ]
+      },
+      {
+        id: 7,
+        part: 2,
+        text: "투자한 상품의 가격이 한 달 만에 10% 떨어졌습니다(1,000만 원 → 900만 원). 이때의 반응은?",
+        options: [
+          {
+            key: "A",
+            score: 1,
+            text: "더 큰 손실이 걱정되어 매도하고 원금을 지키는 쪽을 선택한다."
+          },
+          {
+            key: "B",
+            score: 2,
+            text: "불안하지만 투자한 이유와 상품의 상황을 다시 확인한 뒤 기존 계획에 따라 판단한다."
+          },
+          {
+            key: "C",
+            score: 3,
+            text: "투자 대상의 가치와 하락 원인을 확인하고, 투자 근거가 유효하다면 추가 매수도 고려한다."
+          }
+        ]
+      },
+      {
+        id: 8,
+        part: 2,
+        text: "새로운 금융 상품이나 투자 정보를 접했을 때 주로 어떻게 결정하십니까?",
+        options: [
+          {
+            key: "A",
+            score: 1,
+            text: "은행 창구 직원이나 신뢰하는 지인의 추천을 주로 참고하는 편이다."
+          },
+          {
+            key: "B",
+            score: 2,
+            text: "주변 이야기를 듣고 인터넷이나 유튜브로 검색해 본 뒤 소액으로 시작한다."
+          },
+          {
+            key: "C",
+            score: 3,
+            text: "상품의 구조, 수수료, 위험 요소와 과거 수익률 등을 직접 비교해 보고 판단한다."
+          }
+        ]
+      },
+      {
+        id: 9,
+        part: 2,
+        text: "현재 투자를 통해 이루고 싶은 가장 큰 목표는 무엇입니까?",
+        options: [
+          {
+            key: "A",
+            score: 1,
+            text: "원금을 안전하게 지키면서 은행 이자 수준의 안정적인 수익을 얻는 것."
+          },
+          {
+            key: "B",
+            score: 2,
+            text: "물가 상승률 이상으로 자산을 불려 은퇴 후 안정적인 현금흐름을 만드는 것."
+          },
+          {
+            key: "C",
+            score: 3,
+            text: "가격 변동과 손실 가능성을 감수하더라도 장기적으로 높은 수익을 추구하는 것."
+          }
+        ]
+      },
+      {
+        id: 10,
+        part: 2,
+        text: "투자한 돈을 최소 몇 년 동안 쓰지 않고 묶어둘 수 있습니까?",
+        options: [
+          {
+            key: "A",
+            score: 1,
+            text: "1년 이내 (언제든 필요할 때 바로 빼야 한다)"
+          },
+          {
+            key: "B",
+            score: 2,
+            text: "3년 ~ 5년 정도"
+          },
+          {
+            key: "C",
+            score: 3,
+            text: "5년 ~ 10년 이상 (노후 자금 등 장기 목적)"
+          }
+        ]
+      }
+    ];
+
+    /**
+     * 파트 1 결과 데이터
+     */
+    const PART1_PROFILES = {
+      5: {
+        title: "지도 없이도 척척, 베테랑 가이드",
+        desc: "내 자산의 위치와 흐름을 파악하고 있는 탄탄한 상태입니다. 이제 기본기를 바탕으로 자산을 더 효율적으로 배분하고 관리하는 전략에 집중해 볼 단계입니다."
+      },
+      4: {
+        title: "짐 싸기 완료! 출발선 위의 여행자",
+        desc: "여행을 떠날 준비가 거의 끝났습니다. 한 가지 부족한 준비물만 챙겨 넣으면, 훨씬 안정적이고 든든한 자산 관리 여정을 시작할 수 있습니다."
+      },
+      3: {
+        title: "큰길은 아는데 골목이 헷갈리는 초보 탐험가",
+        desc: "기본적인 방향은 잘 잡고 계시지만 곳곳에 작은 빈틈이 보입니다. 현금흐름과 노후 자금 등 놓치기 쉬운 구역을 한 번 정리해 두면 훨씬 수월해집니다."
+      },
+      2: {
+        title: "목적지는 정했는데 표가 없는 설레는 계획러",
+        desc: "관리는 해야겠다는 마음은 충분하지만 아직 구체적인 실행 단계로 이어지지 못한 상태입니다. 오늘부터 내 자산 현황을 하나씩 표로 정리하며 출발을 준비해 보세요."
+      },
+      1: {
+        title: "지도를 거꾸로 들고 있는 귀여운 길치",
+        desc: "아직 내 돈의 지도를 찬찬히 들여다볼 여유가 없으셨을 뿐입니다. 복잡한 투자 공부보다 내 수입·지출과 통장 현황을 바로 세우는 것부터 가볍게 시작해 보세요."
+      },
+      0: {
+        title: "이제 막 지도를 펼쳐 든 첫걸음 여행자",
+        desc: "전혀 부끄러워할 필요 없습니다. 누구나 처음엔 백지 상태에서 시작합니다. 오늘 지도를 처음 펼친 것만으로도 이미 가장 중요한 첫걸음을 떼셨습니다."
+      }
+    };
+
+    /**
+     * 파트 2 결과 데이터
+     * 점수는 투자 선택 경향을 간략하게 분류하는 교육용 참고 지표입니다.
+     */
+    const PART2_PROFILES = [
+      {
+        min: 5,
+        max: 6,
+        tier: "1단계 · 안정형",
+        title: "집 밖은 위험해, 안심 호캉스 여행러",
+        desc: "원금 손실에 대한 심리적 부담이 큰 편이며, 가격 변동이 있는 상품보다는 안정적인 운용을 중요하게 생각하는 선택 경향이 나타납니다.",
+        tip: "원금을 지키는 것은 중요한 원칙입니다. 다만 물가 상승으로 돈의 실제 구매력이 줄어들 수 있다는 점도 함께 살펴볼 필요가 있습니다. 예·적금의 금리와 물가상승률을 비교하고, 자신의 상황에 맞는 다양한 자산 관리 방법을 알아보세요."
+      },
+      {
+        min: 7,
+        max: 8,
+        tier: "2단계 · 안정추구형",
+        title: "변수 제로! 풀코스 패키지 여행러",
+        desc: "예상치 못한 위험을 피하고 싶고, 비교적 안정적인 틀 안에서 자산을 운용하려는 선택 경향이 있습니다.",
+        tip: "안정적인 운용을 중요하게 생각하는 것은 좋은 출발점입니다. 다만 모든 자산을 한곳에 두기보다 예·적금, 연금, 투자 상품의 특징과 위험을 비교하고, 자신의 목적에 맞게 나누어 관리하는 방법을 생각해 보세요."
+      },
+      {
+        min: 9,
+        max: 11,
+        tier: "3단계 · 균형추구형",
+        title: "안전과 설렘 사이, 실속파 자유여행러",
+        desc: "안정성과 수익 가능성 사이에서 균형을 찾으려는 투자 선택 경향이 있습니다. 무조건 안전한 투자나 높은 수익만을 추구하기보다는 자신의 상황에 맞는 투자 방법을 고민하는 유형입니다.",
+        tip: "균형을 추구하는 태도는 좋은 출발점입니다. 다만 자신에게 적절한 투자 위험 수준은 투자 성향뿐 아니라 투자 목적, 투자 기간, 소득과 지출, 부채 및 비상자금 등 실제 재정 상황에 따라 달라집니다. 나만의 투자 원칙을 세우고 감당할 수 있는 범위에서 분산 투자하는 방법을 생각해 보세요."
+      },
+      {
+        min: 12,
+        max: 13,
+        tier: "4단계 · 적극투자형",
+        title: "낯선 길도 즐기는 배낭 로드트립러",
+        desc: "수익을 높이기 위해 어느 정도의 가격 변동을 감수하려는 선택 경향이 있으며, 새로운 투자 기회에도 열린 태도를 가지고 있습니다.",
+        tip: "적극적인 태도는 장점이 될 수 있지만, 높은 수익 가능성에는 그만큼의 손실 위험도 따릅니다. 투자 목적과 기간을 먼저 확인하고, 한 상품에 집중하기보다 자산군을 나누는 분산 투자와 감당할 수 있는 손실 범위를 정해 두세요."
+      },
+      {
+        min: 14,
+        max: 15,
+        tier: "5단계 · 공격투자형",
+        title: "지도 밖으로 직진! 무계획 오지 탐험가",
+        desc: "높은 수익을 추구하고 가격 변동을 감수하려는 선택 경향이 강하게 나타납니다. 다만 높은 수익을 기대할수록 큰 손실에 노출될 가능성도 커질 수 있습니다.",
+        tip: "높은 수익을 추구하는 것과 큰 손실을 감당할 수 있는 것은 서로 다른 문제입니다. 특히 노후 자금이나 가까운 시기에 사용할 돈은 투자 위험을 신중하게 고려해야 합니다. 전체 자산 중 감당 가능한 범위를 정하고, 분산 투자와 손실 관리 원칙을 마련해 두세요."
+      }
+    ];
+
+    // 상태 변수
+    let currentIndex = 0;
+    let answers = new Array(QUESTIONS.length).fill(null);
+    let isTransitioning = false;
+    let lastResultSummaryText = "";
+    let toastTimer = null;
+
+    // DOM 요소 캐싱
+    const screenStart = document.getElementById("screen-start");
+    const screenQuiz = document.getElementById("screen-quiz");
+    const screenResult = document.getElementById("screen-result");
+
+    const btnStart = document.getElementById("btn-start");
+    const btnPrev = document.getElementById("btn-prev");
+    const btnCopy = document.getElementById("btn-copy");
+    const btnRestart = document.getElementById("btn-restart");
+
+    const quizPartBadge = document.getElementById("quiz-part-badge");
+    const quizProgressText = document.getElementById("quiz-progress-text");
+    const quizProgressBar = document.getElementById("quiz-progress-bar");
+    const quizQuestionNum = document.getElementById("quiz-question-num");
+    const quizQuestionText = document.getElementById("quiz-question-text");
+    const quizOptions = document.getElementById("quiz-options");
+
+    const toastEl = document.getElementById("toast");
+    const toastMessageEl = document.getElementById("toast-message");
+
+    /**
+     * 화면 전환
+     */
+    function showScreen(target) {
+      screenStart.classList.add("hidden");
+      screenQuiz.classList.add("hidden");
+      screenResult.classList.add("hidden");
+
+      if (target === "start") screenStart.classList.remove("hidden");
+      if (target === "quiz") screenQuiz.classList.remove("hidden");
+      if (target === "result") screenResult.classList.remove("hidden");
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /**
+     * 토스트 메시지 표시
+     */
+    function showToast(message) {
+      toastMessageEl.textContent = message;
+      toastEl.classList.remove("opacity-0", "translate-y-3", "pointer-events-none");
+      toastEl.classList.add("opacity-100", "translate-y-0");
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toastEl.classList.remove("opacity-100", "translate-y-0");
+        toastEl.classList.add("opacity-0", "translate-y-3", "pointer-events-none");
+      }, 2800);
+    }
+
+    /**
+     * 현재 문항 렌더링
+     */
+    function renderQuestion() {
+      const q = QUESTIONS[currentIndex];
+      const total = QUESTIONS.length;
+      const savedAnswer = answers[currentIndex];
+
+      if (q.part === 1) {
+        quizPartBadge.textContent = "파트 1 · 경제·자산 현황 (O/X)";
+        quizPartBadge.className = "inline-block px-3.5 py-1 rounded-full bg-sage-50 text-sage-700 text-sm font-semibold";
+      } else {
+        quizPartBadge.textContent = "파트 2 · 투자 선택 경향 (A/B/C)";
+        quizPartBadge.className = "inline-block px-3.5 py-1 rounded-full bg-warm-100 text-warm-500 text-sm font-semibold";
+      }
+
+      quizProgressText.textContent = `${currentIndex + 1} / ${total}`;
+      quizProgressBar.style.width = `${((currentIndex + 1) / total) * 100}%`;
+
+      quizQuestionNum.textContent = `Q${q.id}.`;
+      quizQuestionText.textContent = q.text;
+
+      btnPrev.innerHTML = `
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        ${currentIndex === 0 ? "처음으로" : "이전 문항"}
+      `;
+
+      quizOptions.innerHTML = "";
+
+      if (q.part === 1) {
+        const grid = document.createElement("div");
+        grid.className = "grid grid-cols-2 gap-4";
+
+        const oxItems = [
+          { value: "O", label: "그렇다", symbol: "O" },
+          { value: "X", label: "아니다", symbol: "X" }
+        ];
+
+        oxItems.forEach((item) => {
+          const isSelected = savedAnswer === item.value;
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = `flex flex-col items-center justify-center py-8 px-4 rounded-2xl border-2 transition-all duration-200 cursor-pointer active:scale-[0.98] ${
+            isSelected
+              ? "border-sage-500 bg-sage-50 text-sage-700 shadow-sm"
+              : "border-stone-200 bg-white hover:border-sage-200 hover:bg-sage-50/50 text-navy"
+          }`;
+          btn.innerHTML = `
+            <span class="text-4xl sm:text-5xl font-bold mb-2 ${
+              item.value === "O" ? "text-sage-600" : "text-warm-500"
+            }">${item.symbol}</span>
+            <span class="text-base sm:text-lg font-semibold">${item.label}</span>
+          `;
+          btn.addEventListener("click", () => handleSelectAnswer(item.value, btn));
+          grid.appendChild(btn);
+        });
+
+        quizOptions.appendChild(grid);
+      } else {
+        q.options.forEach((opt) => {
+          const isSelected = savedAnswer === opt.key;
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = `w-full text-left p-4 sm:p-5 rounded-2xl border-2 flex items-start gap-3.5 transition-all duration-200 cursor-pointer active:scale-[0.99] ${
+            isSelected
+              ? "border-sage-500 bg-sage-50 shadow-sm"
+              : "border-stone-200 bg-white hover:border-sage-200 hover:bg-sage-50/50"
+          }`;
+          btn.innerHTML = `
+            <span class="flex-shrink-0 w-8 h-8 rounded-full font-bold text-base flex items-center justify-center mt-0.5 ${
+              isSelected
+                ? "bg-sage-500 text-white"
+                : "bg-stone-100 text-navy-light"
+            }">${opt.key}</span>
+            <span class="text-base sm:text-lg text-navy leading-relaxed font-medium break-keep">${opt.text}</span>
+          `;
+          btn.addEventListener("click", () => handleSelectAnswer(opt.key, btn));
+          quizOptions.appendChild(btn);
+        });
+      }
+    }
+
+    /**
+     * 답변 선택 후 다음 문항 이동
+     */
+    function handleSelectAnswer(value, clickedBtn) {
+      if (isTransitioning) return;
+      isTransitioning = true;
+
+      answers[currentIndex] = value;
+
+      clickedBtn.classList.remove("border-stone-200", "bg-white");
+      clickedBtn.classList.add("border-sage-500", "bg-sage-50");
+
+      setTimeout(() => {
+        isTransitioning = false;
+        if (currentIndex < QUESTIONS.length - 1) {
+          currentIndex++;
+          renderQuestion();
+        } else {
+          renderResult();
+          showScreen("result");
+        }
+      }, 220);
+    }
+
+    /**
+     * 진단 결과 계산 및 렌더링
+     */
+    function renderResult() {
+      // ---------- 1. 파트 1 분석 ----------
+      let oCount = 0;
+      const xCheckpoints = [];
+
+      for (let i = 0; i < 5; i++) {
+        if (answers[i] === "O") {
+          oCount++;
+        } else {
+          xCheckpoints.push(QUESTIONS[i].checkpoint);
+        }
+      }
+
+      const p1Profile = PART1_PROFILES[oCount];
+
+      document.getElementById("res-p1-score-badge").textContent = `5개 중 ${oCount}개 O`;
+      document.getElementById("res-p1-title").textContent = p1Profile.title;
+      document.getElementById("res-p1-desc").textContent = p1Profile.desc;
+
+      const p1Gauge = document.getElementById("res-p1-gauge");
+      p1Gauge.style.width = "0%";
+      setTimeout(() => {
+        p1Gauge.style.width = `${(oCount / 5) * 100}%`;
+      }, 100);
+
+      const checkpointsList = document.getElementById("res-p1-checkpoints-list");
+      checkpointsList.innerHTML = "";
+
+      if (xCheckpoints.length === 0) {
+        const li = document.createElement("li");
+        li.className = "flex items-start gap-2.5 text-sage-700 font-medium";
+        li.innerHTML = `
+          <svg class="w-5 h-5 text-sage-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span>축하합니다! 5개 항목을 모두 O로 채우셨습니다. 현재의 관리 습관을 유지하면서 자산을 더 효율적으로 관리하는 방법을 생각해 보세요.</span>
+        `;
+        checkpointsList.appendChild(li);
+      } else {
+        xCheckpoints.forEach((cp) => {
+          const li = document.createElement("li");
+          li.className = "flex items-start gap-2.5";
+          const bullet = document.createElement("span");
+          bullet.className = "w-2 h-2 rounded-full bg-sage-500 flex-shrink-0 mt-2";
+
+          const text = document.createElement("span");
+          text.textContent = cp;
+
+          li.appendChild(bullet);
+          li.appendChild(text);
+          checkpointsList.appendChild(li);
+        });
+      }
+
+      // ---------- 2. 파트 2 분석 ----------
+      let countA = 0;
+      let countB = 0;
+      let countC = 0;
+      let totalScore = 0;
+
+      for (let i = 5; i < 10; i++) {
+        const ans = answers[i];
+
+        if (ans === "A") {
+          countA++;
+          totalScore += 1;
+        } else if (ans === "B") {
+          countB++;
+          totalScore += 2;
+        } else if (ans === "C") {
+          countC++;
+          totalScore += 3;
+        }
+      }
+
+      const p2Profile = PART2_PROFILES.find(
+        (profile) => totalScore >= profile.min && totalScore <= profile.max
+      ) || PART2_PROFILES[2];
+
+      document.getElementById("res-p2-score-badge").textContent = `${totalScore}점 / 15점`;
+      document.getElementById("res-p2-tier-badge").textContent = p2Profile.tier;
+      document.getElementById("res-p2-title").textContent = p2Profile.title;
+      document.getElementById("res-p2-desc").textContent = p2Profile.desc;
+      document.getElementById("res-p2-tip").textContent = p2Profile.tip;
+
+      // A / B / C 선택 비율
+      const pctA = Math.round((countA / 5) * 100);
+      const pctB = Math.round((countB / 5) * 100);
+      const pctC = Math.round((countC / 5) * 100);
+
+      document.getElementById("bar-a-label").textContent = `${pctA}% (${countA}개)`;
+      document.getElementById("bar-b-label").textContent = `${pctB}% (${countB}개)`;
+      document.getElementById("bar-c-label").textContent = `${pctC}% (${countC}개)`;
+
+      const barA = document.getElementById("bar-a-fill");
+      const barB = document.getElementById("bar-b-fill");
+      const barC = document.getElementById("bar-c-fill");
+
+      barA.style.width = "0%";
+      barB.style.width = "0%";
+      barC.style.width = "0%";
+
+      setTimeout(() => {
+        barA.style.width = `${pctA}%`;
+        barB.style.width = `${pctB}%`;
+        barC.style.width = `${pctC}%`;
+      }, 150);
+
+      // 복사용 요약 텍스트
+      const cpSummary = xCheckpoints.length > 0
+        ? xCheckpoints.map((item) => `- ${item}`).join("\n")
+        : "- 모든 기초 점검 항목을 충족했습니다.";
+
+      lastResultSummaryText = [
+        "[경제 현황 자기 진단 결과]",
+        "",
+        `1. 경제·자산 현황 (5개 중 ${oCount}개 O)`,
+        `▶ ${p1Profile.title}`,
+        "■ 앞으로 O로 바꿀 포인트",
+        cpSummary,
+        "",
+        `2. 나의 투자 선택 경향 (${p2Profile.tier} / ${totalScore}점)`,
+        `▶ ${p2Profile.title}`,
+        `선택 비율: A(안정) ${countA}개 / B(균형) ${countB}개 / C(적극) ${countC}개`,
+        "■ 앞으로 생각해 볼 포인트",
+        `- ${p2Profile.tip}`,
+        "",
+        "※ 본 결과는 5개 문항의 응답을 바탕으로 한 교육용 참고 자료이며, 정식 투자성향 진단이나 개인별 투자 권고가 아닙니다."
+      ].join("\n");
+    }
+
+    /**
+     * 결과 요약 복사
+     */
+    function copyResultSummary() {
+      try {
+        const tempTextarea = document.createElement("textarea");
+        tempTextarea.value = lastResultSummaryText;
+        tempTextarea.setAttribute("readonly", "");
+        tempTextarea.style.position = "fixed";
+        tempTextarea.style.top = "-9999px";
+        tempTextarea.style.left = "-9999px";
+        document.body.appendChild(tempTextarea);
+
+        tempTextarea.select();
+        tempTextarea.setSelectionRange(0, tempTextarea.value.length);
+
+        const success = document.execCommand("copy");
+        document.body.removeChild(tempTextarea);
+
+        if (success) {
+          showToast("결과가 복사되었습니다. 메모장이나 카카오톡에 붙여넣어 보관하세요!");
+        } else {
+          showToast("복사에 실패했습니다. 화면을 캡처해 보관해 주세요.");
+        }
+      } catch (err) {
+        showToast("복사 기능을 사용할 수 없는 환경입니다. 화면을 캡처해 보관해 주세요.");
+      }
+    }
+
+    /**
+     * 이벤트 리스너
+     */
+    btnStart.addEventListener("click", () => {
+      currentIndex = 0;
+      answers = new Array(QUESTIONS.length).fill(null);
+      renderQuestion();
+      showScreen("quiz");
+    });
+
+    btnPrev.addEventListener("click", () => {
+      if (isTransitioning) return;
+
+      if (currentIndex === 0) {
+        showScreen("start");
+      } else {
+        currentIndex--;
+        renderQuestion();
+      }
+    });
+
+    btnCopy.addEventListener("click", copyResultSummary);
+
+    btnRestart.addEventListener("click", () => {
+      currentIndex = 0;
+      answers = new Array(QUESTIONS.length).fill(null);
+      isTransitioning = false;
+      lastResultSummaryText = "";
+      showScreen("start");
+    });
+  </script>
+</body>
+</html>
