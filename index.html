@@ -193,15 +193,9 @@
 
       <!-- PART 2 -->
       <div class="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7">
-        <div class="flex items-center justify-between mb-3 gap-2">
+        <div class="flex items-center justify-between mb-4 gap-2">
           <span class="text-sm font-bold text-accent-500 tracking-wide">PART 2. 나의 투자 선택 경향</span>
-          <span id="res-p2-score-badge" class="px-3 py-1 rounded-full bg-accent-100 text-accent-500 font-bold text-sm flex-shrink-0">
-            10점 / 15점
-          </span>
-        </div>
-
-        <div class="mb-2">
-          <span id="res-p2-tier-badge" class="inline-block px-3 py-1 rounded-lg bg-slate-100 text-navy font-semibold text-sm">
+          <span id="res-p2-tier-badge" class="px-3 py-1 rounded-full bg-accent-100 text-accent-500 font-bold text-sm flex-shrink-0">
             3단계 · 균형추구형
           </span>
         </div>
@@ -308,7 +302,7 @@
     /**
      * 문항 데이터 정의
      * 파트 1: O=1, X=0
-     * 파트 2: A=1, B=2, C=3
+     * 파트 2: A=1, B=2, C=3 (내부 단계 분류용 가중치)
      */
     const QUESTIONS = [
       // 파트 1. 경제·자산 현황 점검
@@ -469,11 +463,11 @@
         desc: "여행을 떠날 준비가 거의 끝났습니다. 한 가지 부족한 준비물만 챙겨 넣으면, 훨씬 안정적이고 든든한 자산 관리 여정을 시작할 수 있습니다."
       },
       3: {
-        title: "큰길은 아는데 골목이 헷갈리는 초보 탐험가",
+        title: "큰길은 아는데 골목이 헷갈려! 초보 탐험가",
         desc: "기본적인 방향은 잘 잡고 계시지만 곳곳에 작은 빈틈이 보입니다. 현금흐름과 노후 자금 등 놓치기 쉬운 구역을 한 번 정리해 두면 훨씬 수월해집니다."
       },
       2: {
-        title: "목적지는 정했는데 표가 없는 설레는 계획러",
+        title: "목적지는 정했는데 아직,, 설레는 계획러",
         desc: "관리는 해야겠다는 마음은 충분하지만 아직 구체적인 실행 단계로 이어지지 못한 상태입니다. 오늘부터 내 자산 현황을 하나씩 표로 정리하며 출발을 준비해 보세요."
       },
       1: {
@@ -488,14 +482,14 @@
 
     /**
      * 파트 2 결과 데이터
-     * 점수는 투자 선택 경향을 간략하게 분류하는 교육용 참고 지표입니다.
+     * 내부 합산 값을 바탕으로 5단계 투자 선택 경향으로 분류합니다.
      */
     const PART2_PROFILES = [
       {
         min: 5,
         max: 6,
         tier: "1단계 · 안정형",
-        title: "집 밖은 위험해, 안심 호캉스 여행러",
+        title: "집 밖은 위험해, 안심 호캉스 여행자",
         desc: "원금 손실에 대한 심리적 부담이 큰 편이며, 가격 변동이 있는 상품보다는 안정적인 운용을 중요하게 생각하는 선택 경향이 나타납니다.",
         tip: "원금을 지키는 것은 중요한 원칙입니다. 다만 물가 상승으로 돈의 실제 구매력이 줄어들 수 있다는 점도 함께 살펴볼 필요가 있습니다. 예·적금의 금리와 물가상승률을 비교하고, 자신의 상황에 맞는 다양한 자산 관리 방법을 알아보세요."
       },
@@ -503,7 +497,7 @@
         min: 7,
         max: 8,
         tier: "2단계 · 안정추구형",
-        title: "변수 제로! 풀코스 패키지 여행러",
+        title: "변수 제로! 풀코스 패키지 여행자",
         desc: "예상치 못한 위험을 피하고 싶고, 비교적 안정적인 틀 안에서 자산을 운용하려는 선택 경향이 있습니다.",
         tip: "안정적인 운용을 중요하게 생각하는 것은 좋은 출발점입니다. 다만 모든 자산을 한곳에 두기보다 예·적금, 연금, 투자 상품의 특징과 위험을 비교하고, 자신의 목적에 맞게 나누어 관리하는 방법을 생각해 보세요."
       },
@@ -511,7 +505,7 @@
         min: 9,
         max: 11,
         tier: "3단계 · 균형추구형",
-        title: "안전과 설렘 사이, 실속파 자유여행러",
+        title: "안전과 설렘 사이, 실속파 자유여행자",
         desc: "안정성과 수익 가능성 사이에서 균형을 찾으려는 투자 선택 경향이 있습니다. 무조건 안전한 투자나 높은 수익만을 추구하기보다는 자신의 상황에 맞는 투자 방법을 고민하는 유형입니다.",
         tip: "균형을 추구하는 태도는 좋은 출발점입니다. 다만 자신에게 적절한 투자 위험 수준은 투자 성향뿐 아니라 투자 목적, 투자 기간, 소득과 지출, 부채 및 비상자금 등 실제 재정 상황에 따라 달라집니다. 나만의 투자 원칙을 세우고 감당할 수 있는 범위에서 분산 투자하는 방법을 생각해 보세요."
       },
@@ -519,7 +513,7 @@
         min: 12,
         max: 13,
         tier: "4단계 · 적극투자형",
-        title: "낯선 길도 즐기는 배낭 로드트립러",
+        title: "낯선 길도 즐기는 배낭여행자",
         desc: "수익을 높이기 위해 어느 정도의 가격 변동을 감수하려는 선택 경향이 있으며, 새로운 투자 기회에도 열린 태도를 가지고 있습니다.",
         tip: "적극적인 태도는 장점이 될 수 있지만, 높은 수익 가능성에는 그만큼의 손실 위험도 따릅니다. 투자 목적과 기간을 먼저 확인하고, 한 상품에 집중하기보다 자산군을 나누는 분산 투자와 감당할 수 있는 손실 범위를 정해 두세요."
       },
@@ -780,7 +774,6 @@
         (profile) => totalScore >= profile.min && totalScore <= profile.max
       ) || PART2_PROFILES[2];
 
-      document.getElementById("res-p2-score-badge").textContent = `${totalScore}점 / 15점`;
       document.getElementById("res-p2-tier-badge").textContent = p2Profile.tier;
       document.getElementById("res-p2-title").textContent = p2Profile.title;
       document.getElementById("res-p2-desc").textContent = p2Profile.desc;
@@ -822,7 +815,7 @@
         "■ 생각해 볼 포인트",
         cpSummary,
         "",
-        `2. 나의 투자 선택 경향 (${p2Profile.tier} / ${totalScore}점)`,
+        `2. 나의 투자 선택 경향 (${p2Profile.tier})`,
         `▶ ${p2Profile.title}`,
         `선택 비율: A(안정) ${countA}개 / B(균형) ${countB}개 / C(적극) ${countC}개`,
         "■ 생각해 볼 포인트",
