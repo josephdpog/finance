@@ -18,24 +18,25 @@
             sans: ['"Noto Sans KR"', 'sans-serif'],
           },
           colors: {
-            ivory: '#F9F8F4',
+            cloud: '#F8FAFC',
             navy: {
-              DEFAULT: '#1E2D3D',
-              light: '#3E4E5E',
-              muted: '#6B7B8C',
+              DEFAULT: '#1E293B',
+              light: '#475569',
+              muted: '#64748B',
             },
-            sage: {
-              50: '#F2F5F2',
-              100: '#E2EBE2',
-              200: '#C5D7C6',
+            primary: {
+              50: '#EFF8FD',
+              100: '#D9EFFA',
+              200: '#B5E0F6',
               500: '#2C99D6',
-              600: '#4E6650',
-              700: '#3D523F',
+              600: '#2181B8',
+              700: '#196795',
             },
-            warm: {
-              50: '#FDF7F2',
-              100: '#F8E9DC',
+            accent: {
+              50: '#FEF2F2',
+              100: '#FDE2E2',
               500: '#EB2F33',
+              600: '#CC2226',
             }
           }
         }
@@ -43,16 +44,16 @@
     };
   </script>
 </head>
-<body class="bg-ivory text-navy font-sans antialiased min-h-screen flex flex-col items-center justify-between selection:bg-sage-100 selection:text-sage-700">
+<body class="bg-cloud text-navy font-sans antialiased min-h-screen flex flex-col items-center justify-between selection:bg-primary-100 selection:text-primary-700">
 
   <!-- 메인 컨테이너 -->
   <main class="w-full max-w-lg mx-auto px-4 py-6 sm:py-10 flex-grow flex flex-col justify-center">
 
     <!-- ==================== 1. 시작 화면 ==================== -->
-    <section id="screen-start" class="bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-9 transition-all duration-300">
+    <section id="screen-start" class="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-9 transition-all duration-300">
 
-      <div class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-sage-50 text-sage-700 text-sm font-semibold mb-5 border border-sage-200/60">
-        <svg class="w-4 h-4 text-sage-500" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+      <div class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary-50 text-primary-700 text-sm font-semibold mb-5 border border-primary-200/60">
+        <svg class="w-4 h-4 text-primary-500" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
         </svg>
         100% 익명 · 약 2~3분 소요
@@ -66,12 +67,12 @@
       </p>
 
       <!-- 구성 안내 -->
-      <div class="bg-ivory rounded-2xl p-5 mb-6 space-y-4 border border-stone-200/70">
+      <div class="bg-cloud rounded-2xl p-5 mb-6 space-y-4 border border-slate-200/70">
         <div>
           <p class="font-semibold text-navy text-base">경제·자산 현황 점검 (5문항)</p>
           <p class="text-sm text-navy-muted mt-0.5">간단한 O / X 선택으로 나의 경제·자산 관리 현황 확인</p>
         </div>
-        <div class="h-px bg-stone-200/70"></div>
+        <div class="h-px bg-slate-200/70"></div>
         <div>
           <p class="font-semibold text-navy text-base">투자 선택 경향 점검 (5문항)</p>
           <p class="text-sm text-navy-muted mt-0.5">상황별 A / B / C 선택으로 나의 투자 선택 경향 파악</p>
@@ -79,11 +80,11 @@
       </div>
 
       <!-- 익명 안내 -->
-      <div class="flex items-start gap-3 bg-sage-50/90 border border-sage-200/70 rounded-2xl p-4 mb-8">
-        <svg class="w-5 h-5 text-sage-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <div class="flex items-start gap-3 bg-primary-50/90 border border-primary-200/70 rounded-2xl p-4 mb-8">
+        <svg class="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
         </svg>
-        <p class="text-sm sm:text-base text-sage-700 leading-relaxed font-medium break-keep">
+        <p class="text-sm sm:text-base text-primary-700 leading-relaxed font-medium break-keep">
           입력한 답변은 별도로 저장하거나 전송하지 않으며, 진단 결과는 현재 화면에서 확인할 수 있습니다.
         </p>
       </div>
@@ -91,31 +92,31 @@
       <button
         id="btn-start"
         type="button"
-        class="w-full py-4 px-6 rounded-2xl bg-sage-500 hover:bg-sage-600 active:scale-[0.99] text-white text-lg font-bold shadow-md shadow-sage-500/20 transition-all duration-200 cursor-pointer"
+        class="w-full py-4 px-6 rounded-2xl bg-primary-500 hover:bg-primary-600 active:scale-[0.99] text-white text-lg font-bold shadow-md shadow-primary-500/20 transition-all duration-200 cursor-pointer"
       >
         진단 시작하기
       </button>
     </section>
 
     <!-- ==================== 2. 문항 화면 ==================== -->
-    <section id="screen-quiz" class="hidden bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-8 transition-all duration-300">
+    <section id="screen-quiz" class="hidden bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-8 transition-all duration-300">
 
       <div class="mb-6">
         <div class="flex items-center justify-between mb-3 gap-2">
-          <span id="quiz-part-badge" class="inline-block px-3.5 py-1 rounded-full bg-sage-50 text-sage-700 text-sm font-semibold">
+          <span id="quiz-part-badge" class="inline-block px-3.5 py-1 rounded-full bg-primary-50 text-primary-700 text-sm font-semibold">
             파트 1 · 경제·자산 현황
           </span>
-          <span id="quiz-progress-text" class="text-base font-bold text-sage-600 flex-shrink-0">
+          <span id="quiz-progress-text" class="text-base font-bold text-primary-600 flex-shrink-0">
             1 / 10
           </span>
         </div>
-        <div class="w-full h-2.5 bg-stone-100 rounded-full overflow-hidden">
-          <div id="quiz-progress-bar" class="h-full bg-sage-500 rounded-full transition-all duration-300 ease-out" style="width: 10%"></div>
+        <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+          <div id="quiz-progress-bar" class="h-full bg-primary-500 rounded-full transition-all duration-300 ease-out" style="width: 10%"></div>
         </div>
       </div>
 
       <div class="min-h-[120px] flex flex-col justify-center mb-7">
-        <p id="quiz-question-num" class="text-sm font-bold text-sage-600 mb-2">Q1.</p>
+        <p id="quiz-question-num" class="text-sm font-bold text-primary-600 mb-2">Q1.</p>
         <h2 id="quiz-question-text" class="text-xl sm:text-2xl font-bold text-navy leading-relaxed break-keep">
           질문 내용이 여기에 표시됩니다.
         </h2>
@@ -124,11 +125,11 @@
       <div id="quiz-options" class="space-y-3.5 mb-8">
       </div>
 
-      <div class="flex items-center justify-between pt-3 border-t border-stone-100">
+      <div class="flex items-center justify-between pt-3 border-t border-slate-100">
         <button
           id="btn-prev"
           type="button"
-          class="inline-flex items-center gap-1.5 py-3 px-4 rounded-xl text-navy-muted hover:text-navy hover:bg-stone-100 font-medium text-base transition-colors cursor-pointer"
+          class="inline-flex items-center gap-1.5 py-3 px-4 rounded-xl text-navy-muted hover:text-navy hover:bg-slate-100 font-medium text-base transition-colors cursor-pointer"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
@@ -142,20 +143,20 @@
     <!-- ==================== 3. 결과 화면 ==================== -->
     <section id="screen-result" class="hidden space-y-5 transition-all duration-300">
 
-      <div class="bg-sage-600 text-white rounded-3xl p-6 sm:p-8 shadow-sm">
+      <div class="bg-primary-500 text-white rounded-3xl p-6 sm:p-8 shadow-sm">
         <h2 class="text-2xl sm:text-3xl font-bold leading-snug mb-2 break-keep">
           진단 결과
         </h2>
-        <p class="text-sage-100 text-base leading-relaxed break-keep">
-          지금 나의 출발선과 여행 스타일을 확인하고, 방향을 잡는 참고 자료로 활용해 보세요.
+        <p class="text-primary-50 text-base leading-relaxed break-keep">
+          나의 출발선과 여행 스타일을 확인하고, 방향을 잡아 보세요.
         </p>
       </div>
 
       <!-- PART 1 -->
-      <div class="bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-7">
+      <div class="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7">
         <div class="flex items-center justify-between mb-4">
-          <span class="text-sm font-bold text-sage-600 tracking-wide">PART 1. 경제·자산 현황</span>
-          <span id="res-p1-score-badge" class="px-3 py-1 rounded-full bg-sage-50 text-sage-700 font-bold text-sm">
+          <span class="text-sm font-bold text-primary-600 tracking-wide">PART 1. 경제·자산 현황</span>
+          <span id="res-p1-score-badge" class="px-3 py-1 rounded-full bg-primary-50 text-primary-700 font-bold text-sm">
             5개 중 0개 O
           </span>
         </div>
@@ -173,14 +174,14 @@
             <span>점검 항목 충족 개수</span>
             <span>5개</span>
           </div>
-          <div class="w-full h-3.5 bg-stone-100 rounded-full overflow-hidden">
-            <div id="res-p1-gauge" class="h-full bg-sage-500 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+          <div class="w-full h-3.5 bg-slate-100 rounded-full overflow-hidden">
+            <div id="res-p1-gauge" class="h-full bg-primary-500 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
           </div>
         </div>
 
-        <div class="bg-ivory rounded-2xl p-5 border border-stone-200/70">
+        <div class="bg-cloud rounded-2xl p-5 border border-slate-200/70">
           <p class="text-base font-bold text-navy mb-3 flex items-center gap-2">
-            <svg class="w-5 h-5 text-sage-600 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 text-primary-600 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
             </svg>
             생각해 볼 포인트
@@ -191,16 +192,16 @@
       </div>
 
       <!-- PART 2 -->
-      <div class="bg-white rounded-3xl shadow-sm border border-stone-200/80 p-6 sm:p-7">
+      <div class="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7">
         <div class="flex items-center justify-between mb-3 gap-2">
-          <span class="text-sm font-bold text-sage-600 tracking-wide">PART 2. 나의 투자 선택 경향</span>
-          <span id="res-p2-score-badge" class="px-3 py-1 rounded-full bg-warm-100 text-warm-500 font-bold text-sm flex-shrink-0">
+          <span class="text-sm font-bold text-accent-500 tracking-wide">PART 2. 나의 투자 선택 경향</span>
+          <span id="res-p2-score-badge" class="px-3 py-1 rounded-full bg-accent-100 text-accent-500 font-bold text-sm flex-shrink-0">
             10점 / 15점
           </span>
         </div>
 
         <div class="mb-2">
-          <span id="res-p2-tier-badge" class="inline-block px-3 py-1 rounded-lg bg-navy/5 text-navy font-semibold text-sm">
+          <span id="res-p2-tier-badge" class="inline-block px-3 py-1 rounded-lg bg-slate-100 text-navy font-semibold text-sm">
             3단계 · 균형추구형
           </span>
         </div>
@@ -212,9 +213,9 @@
           투자 선택 경향 설명이 표시됩니다.
         </p>
 
-        <div class="bg-sage-50 rounded-2xl p-5 border border-sage-200/70 mb-6">
-          <p class="text-sm sm:text-base font-bold text-sage-700 mb-2 flex items-center gap-1.5">
-            <svg class="w-5 h-5 text-sage-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+        <div class="bg-primary-50 rounded-2xl p-5 border border-primary-200/70 mb-6">
+          <p class="text-sm sm:text-base font-bold text-primary-700 mb-2 flex items-center gap-1.5">
+            <svg class="w-5 h-5 text-primary-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z"></path>
             </svg>
             생각해 볼 포인트
@@ -231,10 +232,10 @@
           <div>
             <div class="flex justify-between text-sm font-medium mb-1">
               <span class="text-navy">A. 원금 보존·안정 지향</span>
-              <span id="bar-a-label" class="font-bold text-sage-700">0% (0개)</span>
+              <span id="bar-a-label" class="font-bold text-primary-700">0% (0개)</span>
             </div>
-            <div class="w-full h-3 bg-stone-100 rounded-full overflow-hidden">
-              <div id="bar-a-fill" class="h-full bg-sage-500 rounded-full transition-all duration-700" style="width: 0%"></div>
+            <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div id="bar-a-fill" class="h-full bg-primary-500 rounded-full transition-all duration-700" style="width: 0%"></div>
             </div>
           </div>
 
@@ -243,7 +244,7 @@
               <span class="text-navy">B. 분산·균형 지향</span>
               <span id="bar-b-label" class="font-bold text-slate-700">0% (0개)</span>
             </div>
-            <div class="w-full h-3 bg-stone-100 rounded-full overflow-hidden">
+            <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
               <div id="bar-b-fill" class="h-full bg-slate-500 rounded-full transition-all duration-700" style="width: 0%"></div>
             </div>
           </div>
@@ -251,10 +252,10 @@
           <div>
             <div class="flex justify-between text-sm font-medium mb-1">
               <span class="text-navy">C. 수익·적극 투자 지향</span>
-              <span id="bar-c-label" class="font-bold text-warm-500">0% (0개)</span>
+              <span id="bar-c-label" class="font-bold text-accent-500">0% (0개)</span>
             </div>
-            <div class="w-full h-3 bg-stone-100 rounded-full overflow-hidden">
-              <div id="bar-c-fill" class="h-full bg-warm-500 rounded-full transition-all duration-700" style="width: 0%"></div>
+            <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div id="bar-c-fill" class="h-full bg-accent-500 rounded-full transition-all duration-700" style="width: 0%"></div>
             </div>
           </div>
         </div>
@@ -265,7 +266,7 @@
         <button
           id="btn-copy"
           type="button"
-          class="w-full py-4 px-6 rounded-2xl bg-sage-500 hover:bg-sage-600 active:scale-[0.99] text-white text-lg font-bold shadow-md shadow-sage-500/20 flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer"
+          class="w-full py-4 px-6 rounded-2xl bg-primary-500 hover:bg-primary-600 active:scale-[0.99] text-white text-lg font-bold shadow-md shadow-primary-500/20 flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
@@ -276,7 +277,7 @@
         <button
           id="btn-restart"
           type="button"
-          class="w-full py-3.5 px-6 rounded-2xl bg-white hover:bg-stone-50 border border-stone-300 text-navy font-semibold text-base transition-colors cursor-pointer"
+          class="w-full py-3.5 px-6 rounded-2xl bg-white hover:bg-slate-50 border border-slate-300 text-navy font-semibold text-base transition-colors cursor-pointer"
         >
           다시 진단하기
         </button>
@@ -296,7 +297,7 @@
     aria-live="polite"
     class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-navy text-white px-5 py-3.5 rounded-2xl shadow-lg text-sm sm:text-base font-medium flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-300 translate-y-3 max-w-[92vw]"
   >
-    <svg class="w-5 h-5 text-sage-200 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+    <svg class="w-5 h-5 text-primary-200 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
     </svg>
     <span id="toast-message" class="break-keep">결과가 복사되었습니다. 메모장이나 카카오톡에 붙여넣어 보관하세요!</span>
@@ -599,10 +600,10 @@
 
       if (q.part === 1) {
         quizPartBadge.textContent = "파트 1 · 경제·자산 현황 (O/X)";
-        quizPartBadge.className = "inline-block px-3.5 py-1 rounded-full bg-sage-50 text-sage-700 text-sm font-semibold";
+        quizPartBadge.className = "inline-block px-3.5 py-1 rounded-full bg-primary-50 text-primary-700 text-sm font-semibold";
       } else {
         quizPartBadge.textContent = "파트 2 · 투자 선택 경향 (A/B/C)";
-        quizPartBadge.className = "inline-block px-3.5 py-1 rounded-full bg-warm-100 text-warm-500 text-sm font-semibold";
+        quizPartBadge.className = "inline-block px-3.5 py-1 rounded-full bg-accent-100 text-accent-500 text-sm font-semibold";
       }
 
       quizProgressText.textContent = `${currentIndex + 1} / ${total}`;
@@ -635,12 +636,12 @@
           btn.type = "button";
           btn.className = `flex flex-col items-center justify-center py-8 px-4 rounded-2xl border-2 transition-all duration-200 cursor-pointer active:scale-[0.98] ${
             isSelected
-              ? "border-sage-500 bg-sage-50 text-sage-700 shadow-sm"
-              : "border-stone-200 bg-white hover:border-sage-200 hover:bg-sage-50/50 text-navy"
+              ? "border-primary-500 bg-primary-50 text-primary-700 shadow-sm"
+              : "border-slate-200 bg-white hover:border-primary-200 hover:bg-primary-50/50 text-navy"
           }`;
           btn.innerHTML = `
             <span class="text-4xl sm:text-5xl font-bold mb-2 ${
-              item.value === "O" ? "text-sage-600" : "text-warm-500"
+              item.value === "O" ? "text-primary-500" : "text-accent-500"
             }">${item.symbol}</span>
             <span class="text-base sm:text-lg font-semibold">${item.label}</span>
           `;
@@ -656,14 +657,14 @@
           btn.type = "button";
           btn.className = `w-full text-left p-4 sm:p-5 rounded-2xl border-2 flex items-start gap-3.5 transition-all duration-200 cursor-pointer active:scale-[0.99] ${
             isSelected
-              ? "border-sage-500 bg-sage-50 shadow-sm"
-              : "border-stone-200 bg-white hover:border-sage-200 hover:bg-sage-50/50"
+              ? "border-primary-500 bg-primary-50 shadow-sm"
+              : "border-slate-200 bg-white hover:border-primary-200 hover:bg-primary-50/50"
           }`;
           btn.innerHTML = `
             <span class="flex-shrink-0 w-8 h-8 rounded-full font-bold text-base flex items-center justify-center mt-0.5 ${
               isSelected
-                ? "bg-sage-500 text-white"
-                : "bg-stone-100 text-navy-light"
+                ? "bg-primary-500 text-white"
+                : "bg-slate-100 text-navy-light"
             }">${opt.key}</span>
             <span class="text-base sm:text-lg text-navy leading-relaxed font-medium break-keep">${opt.text}</span>
           `;
@@ -682,8 +683,8 @@
 
       answers[currentIndex] = value;
 
-      clickedBtn.classList.remove("border-stone-200", "bg-white");
-      clickedBtn.classList.add("border-sage-500", "bg-sage-50");
+      clickedBtn.classList.remove("border-slate-200", "bg-white");
+      clickedBtn.classList.add("border-primary-500", "bg-primary-50");
 
       setTimeout(() => {
         isTransitioning = false;
@@ -730,9 +731,9 @@
 
       if (xCheckpoints.length === 0) {
         const li = document.createElement("li");
-        li.className = "flex items-start gap-2.5 text-sage-700 font-medium";
+        li.className = "flex items-start gap-2.5 text-primary-700 font-medium";
         li.innerHTML = `
-          <svg class="w-5 h-5 text-sage-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <svg class="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
           </svg>
           <span>축하합니다! 5개 항목을 모두 O로 채우셨습니다. 현재의 관리 습관을 유지하면서 자산을 더 효율적으로 관리하는 방법을 생각해 보세요.</span>
@@ -743,7 +744,7 @@
           const li = document.createElement("li");
           li.className = "flex items-start gap-2.5";
           const bullet = document.createElement("span");
-          bullet.className = "w-2 h-2 rounded-full bg-sage-500 flex-shrink-0 mt-2";
+          bullet.className = "w-2 h-2 rounded-full bg-primary-500 flex-shrink-0 mt-2";
 
           const text = document.createElement("span");
           text.textContent = cp;
